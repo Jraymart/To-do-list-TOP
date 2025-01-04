@@ -4,7 +4,11 @@
   "description": "A To-Do list created using webpack for The Odin Project # Learning Objectives - Create Todo objects that will be dynamically created using factories or constructor/classes - Include properties such as **Title, Description, dueDate, priority, etc** - Separate app logic from DOM - Add external libraries from NPM (date-fns, localStorage)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack serve --config webpack.dev.js",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +20,7 @@
     "style-loader": "^4.0.0",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.0"
+    "webpack-dev-server": "^5.2.0",
+    "webpack-merge": "^6.0.1"
   }
 }
