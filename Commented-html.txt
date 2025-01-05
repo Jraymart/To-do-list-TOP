@@ -1,0 +1,41 @@
+<!-- <form id="task-form" class="task-form">
+                    <div>
+                        <input type="text" id="new-task-title" placeholder="What do you wanna call your task?"
+                            required="required">
+                        <input type="text" id="new-task-description" placeholder="What do you need to do?">
+                    </div>
+
+                    <div>
+                        <input type="date" id="new-task-due">
+                        <div>
+                            <label for="priority">Priority</label>
+                            <select name="priority" id="new-task-priority"> 
+                                <option value="1">High</option>
+                                <option value="2">Medium</option>
+                                <option value="3">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div id ="actions">
+                        <select name="new-task-project-selector" id="new-task-project-selector">
+                            <option>Personal</option>
+                        </select>
+
+                        <div class="form-actions">
+                            <button class="cancel-button" type="button">Cancel</button>
+                            <button class="confirm-button" type="submit">Add Task</button>
+                        </div>
+                    </div>
+                </form> -->
+
+ 
+                <!-- <form id="project-form" class="project-form">
+                    <h1>NEW PROJECT</h1>
+                    <input type="text" id="new-project-title" placeholder="The next big thing" required>
+                    <hr>
+                    <div class="form-actions">
+                        <button class="cancel-button" type="button">Cancel</button>
+                        <button class="confirm-button" type="submit">Add Project</button>
+                    </div>
+                </form> -->             

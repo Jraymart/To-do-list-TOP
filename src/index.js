@@ -1,9 +1,12 @@
 import ToDoItem from "./ToDoItem";
 import ToDoProject from "./ToDoProject";
+import Nav from "./Nav.js";
+
+
 import "./styles/reset.css";
 import "./styles/style.css";
 //test webpack setup of index.js
-const project = new ToDoProject([], 'Home');
+const project = new ToDoProject([], 'Personal');
 console.log("test index.js");
 const task1 = new ToDoItem(
     'buy groceries',
@@ -15,5 +18,9 @@ const task1 = new ToDoItem(
 
 
 project.addItem(task1);
+
+const domHandler = new Nav();
+console.log(domHandler.newTask);
+
 console.log('Project: ', project);
 console.log('Todo: ', project.getTasks());
