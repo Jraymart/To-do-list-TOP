@@ -1,11 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do List | TOP</title>
+    <style>
+        dialog {
+            height: 100vh;
+            width: 100vw;
+            padding: 0;
+            margin: 0;
+            border: none;
+            background-color: #0c0a0979;
+
+            & .overlay {
+                height: 100%;
+                width: 100%;
+                padding: 30vh 0;
+            }
+
+            & form {
+                display: flex;
+                flex-direction: column;
+                padding: 1rem;
+                margin: 0 auto;
+                width: min(75vw, 600px);
+                background-color: #0c0a09;
+                border-radius: 10px;
+                gap: 1rem;
+            }
+
+            & input[type="text"] {
+                background-color: transparent;
+                width: 100%;
+                border: none;
+            }
+
+            & input:first-child {
+                font-size: 1.5rem;
+            }
+
+            & #new-task-due {
+                background-color: transparent;
+                border: none;
+                color: grey;
+                font-size: 1em;
+                width:125px;
+            }
+
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                filter: invert(.5);
+                cursor: pointer;
+            }
+
+            & div:nth-child(2) {
+                display: flex;
+                align-items: center;
+                gap:.5rem;
+            }
+            & label{
+                color:grey;
+            }
+            & select option, select{
+                background-color: #292524;;
+                border: none;
+                border-radius: 5px;
+                padding:0.2rem;
+            }
+            & hr{
+              border-color:  #292524;
+            }
+            & div:nth-child(4){
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            & button{
+                padding:.5rem;
+                border-radius: 5px;
+            }
+            & button:first-of-type{
+                background-color: #292524;
+                &:hover{
+                    background-color:#44403c ;
+                }
+            }
+
+            & button:last-of-type{
+                background-color: #4d7c0f;
+                &:hover{
+                    background-color: #3f6212;
+                }
+            }
+        }
+       
+    </style>
 </head>
+
 <body>
-    <div class="content"></div>
+    <div class="content">
+        <nav id="navbar">
+            <h1 id="logo">Tasker</h1>
+            <hr>
+            <h2 id="home">Home <button type="button" class="navbutton newTask">+ Task</button></h2>
+            <ul id="home-list">
+                <li>
+                    <button type="button" class="task all">
+                        <img src="img/inbox.svg" alt="All tasks">
+                        All Tasks
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="task completed">
+                        <img src="img/check-circle-outline.svg" alt="All tasks">
+                        Completed
+                    </button>
+                </li>
+            </ul>
+            <hr>
+            <h2 id="projects">My Projects <button type="button" class="navbutton newProject">+ Project</button>
+            </h2>
+            <ul id="project-list">
+                <li><button type="button" class="personal project">Personal</button></li>
+            </ul>
+            <hr>
+        </nav>
+        <div class="task-list-container">
+            <h1>All tasks
+                <hr>
+            </h1>
+            <div class="task-list">
+            </div>
+            <button type="button" class="listbutton newTask">+ Add a Task</button>
+        </div>
+        <dialog id="task-dialogue" open>
+            <div class="overlay">
+                <form id="task-form" class="task-form">
+                    <div>
+                        <input type="text" id="new-task-title" placeholder="What do you wanna call your task?"
+                            required="required">
+                        <input type="text" id="new-task-description" placeholder="What do you need to do?">
+                    </div>
+
+                    <div>
+                        <input type="date" id="new-task-due">
+                        <div>
+                            <label for="priority">Priority</label>
+                            <select name="priority" id="new-task-priority"> 
+                                <option value="1">High</option>
+                                <option value="2">Medium</option>
+                                <option value="3">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <select name="new-task-project-selector" id="new-task-project-selector">
+                            <option>Personal</option>
+                        </select>
+
+                        <div class="form-actions">
+                            <button class="cancel-button" type="button">Cancel</button>
+                            <button class="confirm-button" type="submit">Add Task</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+    </div>
+    <script>
+
+    </script>
 </body>
+
 </html>
