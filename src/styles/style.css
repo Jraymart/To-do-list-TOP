@@ -98,6 +98,35 @@ button>img {
     color: #4d7c0f;
 }
 
+label.completed{
+    text-decoration: line-through;
+    color: gray;
+}
+    
+.task-list > div {
+    display: flex;
+    gap:.5rem;
+    align-items: center;
+    & label{
+        font-weight: bold;
+    }
+    & input[type="checkbox"]{
+        width:1em;
+        height:1em;
+        background-color: whitesmoke;
+        border-radius: 50%;
+        appearance: none;
+        outline:none;
+        -webkit-appearance: none;
+        cursor:pointer;
+        border:1px solid grey;
+    }
+    
+    & input[type="checkbox"]:checked{
+        background-color:#65a30d;
+        
+    }
+}
 
 dialog {
     height: 100vh;

@@ -1,7 +1,12 @@
+import TaskManager from "../../TaskManager.js";
+import ProjectManager from "../../ProjectManager.js";
+import ToDoItem from "../../ToDoItem.js";
+import DOM from "../../DOM.js";
 export default function createTaskInput() {
     const dialog = document.querySelector("#task-dialog");
     const taskform = document.createElement("form");
     taskform.id = "task-form";
+
     const h1 = document.createElement("h1");
     h1.textContent = "NEW TASK";
 
@@ -70,10 +75,15 @@ export default function createTaskInput() {
     const projectSelect = document.createElement("select");
     projectSelect.id = "new-task-project-selector";
 
-    //update the option list later to allow new project additions
-    const projectOptions = document.createElement("option");
-    projectOptions.textContent = "Personal";
-    projectSelect.appendChild(projectOptions);
+    const projects = ProjectManager.getAllProjects();
+
+    projects.forEach((project) => {
+        const projectOptions = document.createElement("option");
+        projectOptions.value = project.id;
+        projectOptions.textContent = project.getProjectName();
+        projectSelect.appendChild(projectOptions);
+    });
+
     inputDiv.appendChild(projectSelect);
 
     innerDiv = document.createElement("div");
@@ -98,6 +108,27 @@ export default function createTaskInput() {
 
     inputDiv.appendChild(innerDiv);
     taskform.appendChild(inputDiv);
+
+    taskform.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const taskData = {
+            title: title.value,
+            description: description.value,
+            dueDate: date.value,
+            priority: prioritySelect.value,
+            completed: false,
+        };
+
+        const selectedProjectId = projectSelect.value;
+        const selectedProject = ProjectManager.getProjectById(selectedProjectId);
+        TaskManager.createTask(selectedProject, taskData);
+
+        const dom = new DOM();
+        dom.renderTasks(selectedProjectId);
+
+        dialog.close();
+    });
+
     return taskform;
 }
 

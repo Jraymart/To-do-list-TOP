@@ -1,5 +1,5 @@
-import newTaskForm from "./JS/Components/NewTask.js";
-import newProjectForm from "./JS/Components/NewProject.js";
+import newTaskForm from "./JS/Components/NewTaskForm.js";
+import newProjectForm from "./JS/Components/NewProjectForm.js";
 
 export default class Nav {
     constructor(
