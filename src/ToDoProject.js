@@ -1,6 +1,6 @@
 //handles groups of tasks
-
 import ToDoItem from './ToDoItem.js';
+
 export default class ToDoProject{
     constructor(todoItems = [], title)
     {   

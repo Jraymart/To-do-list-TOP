@@ -32,6 +32,7 @@ export default function createTaskInput() {
     const date = document.createElement("input");
     date.type = "date";
     date.id = "new-task-due";
+    date.valueAsDate = new Date();
     inputDiv.appendChild(date);
 
     let innerDiv = document.createElement("div");
@@ -122,9 +123,8 @@ export default function createTaskInput() {
         const selectedProjectId = projectSelect.value;
         const selectedProject = ProjectManager.getProjectById(selectedProjectId);
         TaskManager.createTask(selectedProject, taskData);
-
-        const dom = new DOM();
-        dom.renderTasks(selectedProjectId);
+        
+        TaskManager.renderTasks(selectedProjectId);
 
         dialog.close();
     });

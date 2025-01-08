@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do List | TOP</title>
-    <style>
-    </style>
+    <link rel="icon" href="./img/inbox.svg" type=image/svg>
 </head>
 
 <body>
@@ -23,8 +22,8 @@
                     </button>
                 </li>
                 <li>
-                    <button type="button" class="task completed">
-                        <img src="img/check-circle-outline.svg" alt="All tasks">
+                    <button type="button" class="task complete">
+                        <img src="img/check-circle-outline.svg" alt="Completed tasks">
                         Completed
                     </button>
                 </li>
@@ -40,9 +39,9 @@
         <div class="task-list-container">
             <h1></h1>
             <div class="task-list">
-                
+
             </div>
-            <button type="button" class="listbutton newTask">+ Add a Task</button>
+            <button type="button" class="listbutton newTask" aria-hidden="false">+ Add a Task</button>
         </div>
         <dialog id="task-dialog">
             <div class="overlay">
