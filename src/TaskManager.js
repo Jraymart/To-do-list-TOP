@@ -1,6 +1,7 @@
 //handle task related operations within a project
 import ToDoItem from './ToDoItem';
 import ProjectManager from './ProjectManager';
+import { hr } from 'date-fns/locale';
 
 
 export default class TaskManager{
@@ -99,15 +100,41 @@ export default class TaskManager{
     static renderTaskItem(task, projectId) {
         const taskDiv = document.createElement("div");
         const taskItemName = document.createElement("div");
+        const hr = document.createElement("hr");
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.id = task.id;
         checkbox.checked = task.completed;
+        
+
+        const label = document.createElement("label");
+        label.setAttribute("for", checkbox.id);
+        label.textContent = task.title;
 
         const taskItemDescription = document.createElement("div");
         const descriptionText = document.createElement("p");
-        taskItemDescription.appendChild(descriptionText);
+        descriptionText.classList.add("description");
         descriptionText.textContent = task.description;
+
+        const taskDue = document.createElement("p");
+        taskDue.classList.add("due-date");
+        taskDue.textContent = "Due Date: " + task.dueDate;
+
+        const taskDel = document.createElement("button");
+        taskDel.type = "button"
+        taskDel.textContent = "Del";
+
+        taskDel.addEventListener("click", () => {
+            const project = ProjectManager.getProjectById(projectId);
+            TaskManager.removeTask(project, task.id);
+    
+            // Re-render the task list to reflect the removal
+            if (projectId) {
+                this.renderTasks(projectId);
+            } else {
+                this.renderAllTasks();
+            }
+    });
 
         checkbox.addEventListener("change", () => {
             task.toggleComplete();
@@ -124,26 +151,37 @@ export default class TaskManager{
                 }
             }
         });
-
-        const label = document.createElement("label");
-        label.setAttribute("for", checkbox.id);
-        label.textContent = task.title;
-
+     
+        taskItemDescription.appendChild(descriptionText);
+        taskItemDescription.appendChild(taskDue);
         taskItemName.appendChild(checkbox);
         taskItemName.appendChild(label);
+        taskItemName.appendChild(taskDel);
         taskDiv.appendChild(taskItemName)
         taskDiv.appendChild(taskItemDescription);
-        this.updateTask(task, taskItemName);
+        taskDiv.appendChild(hr)
+        this.updateTask(task, taskDiv);
 
         return taskDiv;
     }
 
     static updateTask(task, taskItem){
         const label = taskItem.querySelector('label');
+        const description = taskItem.querySelector(".description");
+        const dueDate = taskItem.querySelector(".due-date");
         if (task.completed) {
             label.classList.add("completed");
+            if(description) {description.classList.add("completed")};
+            if(dueDate){ 
+                const date = new Date ()
+                dueDate.textContent = "Completed";
+                dueDate.classList.add("completed")
+            };
+           
         } else {
             label.classList.remove("completed");
+            if(description) {description.classList.remove("completed")};
+            if(dueDate) {dueDate.classList.remove("completed")};
         }
 
     }
