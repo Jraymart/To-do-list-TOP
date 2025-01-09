@@ -1,7 +1,6 @@
-import TaskManager from "../../TaskManager.js";
-import ProjectManager from "../../ProjectManager.js";
-import ToDoItem from "../../ToDoItem.js";
-import DOM from "../../DOM.js";
+import TaskManager from "../Classes/TaskManager.js";
+import ProjectManager from "../Classes/ProjectManager.js";
+
 export default function createTaskInput() {
     const dialog = document.querySelector("#task-dialog");
     const taskform = document.createElement("form");

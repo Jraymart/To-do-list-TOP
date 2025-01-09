@@ -1,5 +1,5 @@
-import ProjectManager from "./ProjectManager";
-import TaskManager from "./TaskManager";
+import ProjectManager from "./JS/Classes/ProjectManager.js";
+import TaskManager from "./JS/Classes/TaskManager.js";
 
 import createTaskInput from "./JS/Components/NewTaskForm.js";
 import createProjectInput from "./JS/Components/NewProjectForm.js";

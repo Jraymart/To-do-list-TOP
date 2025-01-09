@@ -5,8 +5,8 @@ export default class ToDoItem {
         description,
         dueDate,
         priority,
-        parentProjectId,
-        completed,
+        projectId,
+        completed = false,
     ){
         this.id = Math.random().toString().split(".")[1];
         this.createdAt = new Date();
@@ -14,9 +14,10 @@ export default class ToDoItem {
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.parentProjectId = parentProjectId;
-        this.completed = false;
+        this.projectId = projectId;
+        this.completed = completed ;
     }
+
     toggleComplete() {
         this.completed = !this.completed
     }

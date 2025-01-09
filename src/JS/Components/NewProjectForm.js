@@ -1,4 +1,4 @@
-import ProjectManager from "../../ProjectManager";
+import ProjectManager from "../Classes/ProjectManager.js";
 import DOM from "../../DOM.js";
 export default function createProjectInput() {
     const dialog = document.querySelector("#task-dialog");
@@ -44,7 +44,6 @@ export default function createProjectInput() {
             // Add the project to the ProjectManager
             const newProject = ProjectManager.createProject(newTitle);
 
-            // Update the UI with the new project
             const projectList = document.querySelector("#project-list");
             const newListItem = document.createElement("li");
             const newListButton = document.createElement("button");
@@ -55,13 +54,11 @@ export default function createProjectInput() {
             projectList.appendChild(newListItem);
         }
 
-        // Now update the UI with the new project
         const dom = new DOM();
         dom.renderProjects();
-        // Close the dialog
+
         dialog.close();
     });
-
 
     projectForm.appendChild(title);
     projectForm.appendChild(hr);

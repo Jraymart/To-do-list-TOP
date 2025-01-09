@@ -1,34 +1,51 @@
 //handle task related operations within a project
-import ToDoItem from './ToDoItem';
-import ProjectManager from './ProjectManager';
-import { hr } from 'date-fns/locale';
+import ToDoItem from './ToDoItem.js';
+import ProjectManager from './ProjectManager.js';
 
-
-export default class TaskManager{
-    static createTask(project, task){
+export default class TaskManager {
+    static createTask(project, task) {
         const newTask = new ToDoItem(
             task.title,
             task.description,
             task.dueDate,
             task.priority,
             project.id
-        )
+        );
         project.addItem(newTask);
+        ProjectManager.saveToLocalStorage();
     }
 
-    static removeTask(project, taskId){
-        project.removeItem(taskId);
-    }
-
-    static getTasks(project, excludeCompleted = false){
-        if(excludeCompleted){
-            return project.getTasks().filter(task => !task.completed);
+    static removeTask(project, taskId) {
+        if (!project) {
+            console.error("Cannot remove task. Project is undefined.");
+            return;
         }
-        return project.getTasks();
+        project.removeItem(taskId);
+        ProjectManager.saveToLocalStorage();
+    }
+
+    static getTasks(project, excludeCompleted = false) {
+        let tasks = project.getTasks();
+        if (excludeCompleted) {
+            tasks = tasks.filter(task => !task.completed);
+        }
+
+        tasks.sort((taskA, taskB) => {
+            const dueDateA = new Date(taskA.dueDate);
+            const dueDateB = new Date(taskB.dueDate);
+
+            if (dueDateA - dueDateB !== 0) {
+                return dueDateA - dueDateB;
+            }
+
+            return taskA.priority - taskB.priority;
+        });
+        console.log(tasks);
+        return tasks;
     }
 
     //Render Tasks
-    static renderTasks(projectId){
+    static renderTasks(projectId) {
         const taskContainer = document.querySelector('.task-list');
         const containerH1 = document.querySelector('.task-list-container > h1');
         const hr = document.createElement("hr");
@@ -51,12 +68,25 @@ export default class TaskManager{
     static renderAllTasks() {
         const taskContainer = document.querySelector('.task-list');
         taskContainer.innerHTML = '';
-        
+
         const projects = ProjectManager.getAllProjects();
         let allTasks = [];
 
         projects.forEach((project) => {
-            allTasks = allTasks.concat(this.getTasks(project, true));
+            allTasks = allTasks.concat(
+                project.getTasks().filter(task => !task.completed).map(task => {
+                    if (!(task instanceof ToDoItem)) {
+                        task = new ToDoItem(
+                            task.title,
+                            task.description,
+                            task.dueDate,
+                            task.priority,
+                            task.projectId
+                        );
+                    }
+                    return task;
+                })
+            );
         });
 
         const containerH1 = document.querySelector('.task-list-container > h1');
@@ -68,6 +98,7 @@ export default class TaskManager{
             const taskItem = this.renderTaskItem(task);
             taskContainer.appendChild(taskItem);
         });
+
         showTaskbtn();
     }
 
@@ -79,10 +110,22 @@ export default class TaskManager{
         let completedTasks = [];
 
         projects.forEach((project) => {
-            const tasks = this.getTasks(project);
-            completedTasks = completedTasks.concat(tasks.filter(task => task.completed));
+            const tasks = project.getTasks().filter(task => task.completed);
+            completedTasks = completedTasks.concat(
+                tasks.map(task => {
+                    if (!(task instanceof ToDoItem)) {
+                        task = new ToDoItem(
+                            task.title,
+                            task.description,
+                            task.dueDate,
+                            task.priority,
+                            task.projectId
+                        );
+                    }
+                    return task;
+                })
+            );
         });
-
         const containerH1 = document.querySelector(".task-list-container > h1");
         containerH1.textContent = "Completed Tasks";
         const hr = document.createElement("hr");
@@ -94,7 +137,7 @@ export default class TaskManager{
         });
 
         hideTaskBtn();
-      
+
     }
 
     static renderTaskItem(task, projectId) {
@@ -105,41 +148,75 @@ export default class TaskManager{
         checkbox.type = "checkbox";
         checkbox.id = task.id;
         checkbox.checked = task.completed;
-        
+
 
         const label = document.createElement("label");
         label.setAttribute("for", checkbox.id);
         label.textContent = task.title;
 
-        const taskItemDescription = document.createElement("div");
+        const taskItemDescriptionDiv = document.createElement("div");
         const descriptionText = document.createElement("p");
         descriptionText.classList.add("description");
         descriptionText.textContent = task.description;
+
+        const priorityDiv = document.createElement("div");
+        priorityDiv.className = "date-priority";
+
 
         const taskDue = document.createElement("p");
         taskDue.classList.add("due-date");
         taskDue.textContent = "Due Date: " + task.dueDate;
 
+        const priority = document.createElement("p");
+        priority.classList.add("priority");
+        switch (task.priority) {
+            case "1":
+                priority.textContent = "HIGH";
+                priority.classList.add("high");
+                break;
+            case "2":
+                priority.textContent = "MEDIUM";
+                priority.classList.add("medium");
+                break;
+            case "3":
+                priority.textContent = "LOW";
+                priority.classList.add("low");
+                break;
+        };
+
+        priorityDiv.appendChild(taskDue);
+        priorityDiv.appendChild(priority);
+
         const taskDel = document.createElement("button");
         taskDel.type = "button"
-        taskDel.textContent = "Del";
+        taskDel.classList.add("delbtn");
+
 
         taskDel.addEventListener("click", () => {
-            const project = ProjectManager.getProjectById(projectId);
-            TaskManager.removeTask(project, task.id);
-    
-            // Re-render the task list to reflect the removal
-            if (projectId) {
-                this.renderTasks(projectId);
+            const project = projectId ? ProjectManager.getProjectById(projectId) : ProjectManager.getProjectById(task.projectId);
+            if (project) {
+                TaskManager.removeTask(project, task.id);
+
+                if (projectId) {
+                    this.renderTasks(projectId); 
+                } else {
+                    if (document.querySelector('.task-list-container > h1').textContent === 'All Tasks') {
+                        this.renderAllTasks();
+                    } else if (document.querySelector('.task-list-container > h1').textContent === 'Completed Tasks') {
+                        this.renderCompletedTasks();
+                    }
+                }
             } else {
-                this.renderAllTasks();
+                console.error("Cannot delete task. Project not found.");
             }
-    });
+        });
 
         checkbox.addEventListener("change", () => {
+            console.log(task instanceof ToDoItem);
             task.toggleComplete();
             checkbox.checked = task.completed;
             this.updateTask(task, taskDiv);
+            ProjectManager.saveToLocalStorage();
 
             if (!task.completed) {
                 this.renderCompletedTasks();
@@ -151,48 +228,44 @@ export default class TaskManager{
                 }
             }
         });
-     
-        taskItemDescription.appendChild(descriptionText);
-        taskItemDescription.appendChild(taskDue);
+
+        taskItemDescriptionDiv.appendChild(descriptionText);
+        taskItemDescriptionDiv.appendChild(priorityDiv);
         taskItemName.appendChild(checkbox);
         taskItemName.appendChild(label);
         taskItemName.appendChild(taskDel);
         taskDiv.appendChild(taskItemName)
-        taskDiv.appendChild(taskItemDescription);
+        taskDiv.appendChild(taskItemDescriptionDiv);
         taskDiv.appendChild(hr)
         this.updateTask(task, taskDiv);
 
         return taskDiv;
     }
 
-    static updateTask(task, taskItem){
+    static updateTask(task, taskItem) {
         const label = taskItem.querySelector('label');
         const description = taskItem.querySelector(".description");
         const dueDate = taskItem.querySelector(".due-date");
         if (task.completed) {
             label.classList.add("completed");
-            if(description) {description.classList.add("completed")};
-            if(dueDate){ 
-                const date = new Date ()
-                dueDate.textContent = "Completed";
-                dueDate.classList.add("completed")
-            };
-           
+            description?.classList.add("completed");
+            dueDate?.classList.add("completed");
+            dueDate.textContent = "Completed";
         } else {
             label.classList.remove("completed");
-            if(description) {description.classList.remove("completed")};
-            if(dueDate) {dueDate.classList.remove("completed")};
+            description?.classList.remove("completed");
+            dueDate?.classList.remove("completed");
         }
-
+        ProjectManager.saveToLocalStorage();
     }
 }
 
-function hideTaskBtn(){
+function hideTaskBtn() {
     const taskbtn = document.querySelector(".listbutton");
     taskbtn.style.visibility = "hidden";
 }
 
-function showTaskbtn(){
+function showTaskbtn() {
     const taskbtn = document.querySelector(".listbutton");
     taskbtn.style.visibility = "visible";
 }

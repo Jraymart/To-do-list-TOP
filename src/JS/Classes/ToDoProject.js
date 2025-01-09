@@ -13,7 +13,6 @@ export default class ToDoProject{
         if (newItem instanceof ToDoItem){
             this.todoItems.push(newItem);
         }
-        
     }
 
     removeItem(itemId){
@@ -23,9 +22,11 @@ export default class ToDoProject{
         }
         this.todoItems.splice(index,1);
     }
+
     getProjectName(){
         return this.title;
     }
+    
     getTasks(){
         return this.todoItems;
     }

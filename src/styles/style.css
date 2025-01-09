@@ -62,7 +62,6 @@ li>button {
 
 button>img {
     width: 2rem;
-    filter: invert(30);
 }
 
 .project:active,
@@ -122,6 +121,7 @@ button>img {
             align-items: center;
             gap : 0.5rem;
             grid-template-columns: 1em 1fr 1em;
+            padding-right: 1rem;
 
             & label{
             font-weight: bold;
@@ -144,13 +144,25 @@ button>img {
             & input[type="checkbox"]:checked{
                 background-color:#65a30d;
             }
+
+            & .delbtn{
+                background: no-repeat center center #b91c1c url("../img/delete.svg") ;
+                width: 2rem;
+                height: 2rem;
+                border-radius:5px;
+            }
+
+            & .delbtn:hover{
+                background: no-repeat center center #991b1b url("../img/delete-empty.svg");
+            }
+
         }
 
         & div:nth-of-type(2){
             flex-direction: column;
             padding-left: 1.5rem;
             align-items: start;
-            & p{
+            & p:first-of-type{
                 color: darkgrey;
                 &.due-date{
                     font-style: italic;
@@ -161,9 +173,31 @@ button>img {
                     text-decoration: none;
                 }
             }
-           
+            & .date-priority{
+                display: flex;
+
+                & .high{
+                    background-color: #b91c1c;
+                }
+
+                & .medium {
+                    background-color: #d97706;
+                }
+
+                & .low{
+                    background-color:#65a30d;
+                }
+                & .priority{
+                    padding:.2rem;
+                    border-radius: 5px;
+                    font-weight: bold;
+                }
+            }
+            
+
         }
 
+       
         
     }
 
