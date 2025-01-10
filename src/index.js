@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
      if (ProjectManager.getAllProjects().length === 0) {
         ProjectManager.createProject('Personal');
     }
-
+    
     const domHandler = new DOM();
     domHandler.renderProjects();
 

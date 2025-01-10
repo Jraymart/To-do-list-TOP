@@ -18,6 +18,8 @@ export default function createProjectInput() {
     const hr = document.createElement("hr");
 
     const div = document.createElement("div");
+    const divActions = document.createElement("div");
+    divActions.id = "actions";
     div.className = "form-actions";
     const cancel = document.createElement("button");
     cancel.className = "cancel-button";
@@ -31,6 +33,7 @@ export default function createProjectInput() {
 
     div.appendChild(cancel);
     div.appendChild(submit);
+    divActions.appendChild(div);
     cancel.addEventListener("click", () => {
         dialog.close();
     });
@@ -62,7 +65,7 @@ export default function createProjectInput() {
 
     projectForm.appendChild(title);
     projectForm.appendChild(hr);
-    projectForm.appendChild(div);
+    projectForm.appendChild(divActions);
 
     return projectForm;
 

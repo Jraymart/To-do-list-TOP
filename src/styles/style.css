@@ -8,6 +8,15 @@ body {
 
 }
 
+#hamburger {
+    display: none;
+}
+
+#logo {
+    margin: .5rem;
+    font-size: 1.2rem;
+}
+
 #navbar {
     background-color: #1c1917;
     display: flex;
@@ -38,18 +47,44 @@ body {
     background-color: #3f6212;
 }
 
-#logo{
-    margin:.5rem;
-    font-size: 1.2rem;
-}
 h2 {
     margin: .5rem;
     font-size: 1rem;
 }
 
+ul#project-list>li {
+    display: flex;
+    margin: .5rem;
+    font-size: 1rem;
+    padding-right: .5rem;
+    align-items: center;
+    justify-content: space-between;
+
+    &:hover {
+        background-color: #365314;
+
+        & button:last-child {
+            width: 20%;
+            background: no-repeat center center #b91c1c url("../img/delete.svg");
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 5px;
+
+            &:hover {
+                background: no-repeat center center #991b1b url("../img/delete-empty.svg");
+            }
+        }
+
+        & button:first-child {
+            width: 80%;
+        }
+    }
+}
+
 ul>li {
     margin: .5rem;
     font-size: 1rem;
+    display: flex;
 }
 
 li>button {
@@ -95,88 +130,94 @@ button>img {
     color: #4d7c0f;
 }
 
-.completed{
+.completed {
     text-decoration: line-through #65a30d 2px;
     color: gray;
 }
 
-.due-date.completed{
+.due-date.completed {
     color: red;
 }
 
-.task-list{
-    display:flex;
+.task-list {
+    display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    & hr{
+
+    & hr {
         border: .2px dotted grey;
     }
+
     &>div {
         display: flex;
         flex-direction: column;
         gap: 0.3rem;
-        
-        & div:first-of-type{
+
+        & div:first-of-type {
             display: grid;
             align-items: center;
-            gap : 0.5rem;
+            gap: 0.5rem;
             grid-template-columns: 1em 1fr 1em;
             padding-right: 1rem;
 
-            & label{
-            font-weight: bold;
-            font-size:24px;
-            text-transform: capitalize;
+            & label {
+                font-weight: bold;
+                font-size: 24px;
+                text-transform: capitalize;
             }
 
-            & input[type="checkbox"]{
-                width:1em;
-                height:1em;
+            & input[type="checkbox"] {
+                width: 1em;
+                height: 1em;
                 background-color: whitesmoke;
                 border-radius: 50%;
                 appearance: none;
-                outline:none;
+                outline: none;
                 -webkit-appearance: none;
-                cursor:pointer;
-                border:1px solid grey;
+                cursor: pointer;
+                border: 1px solid grey;
             }
 
-            & input[type="checkbox"]:checked{
-                background-color:#65a30d;
+            & input[type="checkbox"]:checked {
+                background-color: #65a30d;
             }
 
-            & .delbtn{
-                background: no-repeat center center #b91c1c url("../img/delete.svg") ;
+            & .delbtn {
+                background: no-repeat center center #b91c1c url("../img/delete.svg");
                 width: 2rem;
                 height: 2rem;
-                border-radius:5px;
+                border-radius: 5px;
             }
 
-            & .delbtn:hover{
+            & .delbtn:hover {
                 background: no-repeat center center #991b1b url("../img/delete-empty.svg");
             }
 
         }
 
-        & div:nth-of-type(2){
+        & div:nth-of-type(2) {
             flex-direction: column;
             padding-left: 1.5rem;
             align-items: start;
-            & p:first-of-type{
+
+            & p:first-of-type {
                 color: darkgrey;
-                &.due-date{
+
+                &.due-date {
                     font-style: italic;
-                    color:#65a30d;
+                    color: #65a30d;
                 }
-                &.due-date.completed{
+
+                &.due-date.completed {
                     color: red;
                     text-decoration: none;
                 }
             }
-            & .date-priority{
+
+            & .date-priority {
                 display: flex;
 
-                & .high{
+                & .high {
                     background-color: #b91c1c;
                 }
 
@@ -184,24 +225,29 @@ button>img {
                     background-color: #d97706;
                 }
 
-                & .low{
-                    background-color:#65a30d;
+                & .low {
+                    background-color: #65a30d;
                 }
-                & .priority{
-                    padding:.2rem;
+
+                & .priority {
+                    padding: .2rem;
                     border-radius: 5px;
                     font-weight: bold;
                 }
             }
-            
-
         }
-
-       
-        
     }
+}
 
+.textarea[contenteditable]:empty::before {
+    content: "What do you want to do?";
+    color: grey;
+}
 
+.textarea[contenteditable]:focus {
+    outline: none;
+    caret-color: white;
+    background-color: #1c1917;
 }
 
 dialog {
@@ -210,7 +256,12 @@ dialog {
     padding: 0;
     margin: 0;
     border: none;
-    background-color: #0c0a0979;
+    background-color: transparent;
+
+    &::backdrop {
+        background-color: #0c0a0979;
+        backdrop-filter: blur(5px);
+    }
 
     & .overlay {
         height: 100%;
@@ -226,7 +277,18 @@ dialog {
         width: min(75vw, 600px);
         background-color: #0c0a09;
         border-radius: 10px;
-        gap: .5rem;
+        gap: 1rem;
+
+        &>div:first-of-type {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+
+            &>input:first-of-type {
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+        }
     }
 
     & input[type="text"] {
@@ -234,11 +296,23 @@ dialog {
         width: 100%;
         border: none;
         padding-bottom: .5rem;
+        border-radius: 5px;
     }
 
-    & input:first-of-type {
-        font-size: 1.5rem;
+    & input[type="text"]:focus {
+        background-color: #1c1917;
+    }
 
+    & .textarea {
+        display: block;
+        background-color: transparent;
+        padding: .2rem 0 0 .2rem;
+        width: 100%;
+        border: none;
+        padding-bottom: .5rem;
+        overflow: hidden;
+        resize: vertical;
+        border-radius: 5px;
     }
 
     & #new-task-due {
@@ -289,7 +363,6 @@ dialog {
 
     & #actions {
         display: flex;
-        align-items: center;
         justify-content: space-between;
     }
 
@@ -317,6 +390,106 @@ dialog {
 
         &:hover {
             background-color: #3f6212;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #navbar {
+        position: absolute;
+        width: 100vw;
+        left: -100vw;
+        transition: all .3s ease;
+    }
+
+    #hamburger {
+        display: block;
+        position: fixed;
+        z-index: 1;
+        width: 3rem;
+        height: 3rem;
+        background: url(../img/menu.svg) #365314;
+        margin: 1rem;
+        border-radius: 5px;
+        -webkit-box-shadow: 1px 1px 10px 0px #000000;
+        box-shadow: 1px 1px 10px 0px #000000;
+        transition: all .3s ease;
+    }
+
+    #hamburger.open {
+        background: url(../img/close.svg)#b91c1c;
+    }
+
+    #navbar.open {
+        left: 0 !important;
+    }
+
+    ul#project-list>li {
+        &button:first-child {
+            &:active {
+                background-color: #365314;
+            }
+        }
+
+        & button:last-child {
+            width: 20%;
+            background: no-repeat center center #b91c1c url("../img/delete.svg");
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 5px;
+
+            &:active {
+                background: no-repeat center center #991b1b url("../img/delete-empty.svg");
+            }
+        }
+
+        & button:first-child {
+            width: 80%;
+        }
+    }
+
+    dialog {
+        margin: auto;
+
+        & form {
+            width: 100%;
+
+            & h1 {
+                font-size: 1.5rem;
+            }
+
+            &>div:first-of-type {
+                display: flex;
+                flex-direction: column;
+                gap: .5rem;
+
+                &>input:first-of-type {
+                    font-size: 1.1rem;
+                    font-weight: bold;
+                }
+            }
+
+            & #actions {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                gap: 1rem;
+
+                & select option,
+                select {
+                    width: 100%;
+                    border-radius: 5px;
+                    padding: 0.5rem;
+                }
+
+                & .form-actions {
+                    width: 100%;
+
+                    & button {
+                        width: 50%;
+                    }
+                }
+            }
         }
     }
 }

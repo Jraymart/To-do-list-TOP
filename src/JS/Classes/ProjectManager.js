@@ -76,14 +76,21 @@ export default class ProjectManager {
         projects.forEach((project) => {
             const projectListItem = document.createElement("li");
             const projectButton = document.createElement("button");
+            const delProject = document.createElement("button");
+            delProject.classList.add("del-project");
+            delProject.type = "button";
+
             projectButton.type = "button";
             projectButton.classList.add(project.getProjectName());
             projectButton.classList.add("project");
             projectButton.textContent = project.getProjectName();
             projectListItem.appendChild(projectButton);
-            
+            projectListItem.appendChild(delProject);
             projectButton.addEventListener("click", () => TaskManager.renderTasks(project.id));
-
+            delProject.addEventListener("click", ()=> {
+                ProjectManager.removeProject(project.id);
+                ProjectManager.renderProjects(projectList);
+            });
             projectList.appendChild(projectListItem);
         });
     }

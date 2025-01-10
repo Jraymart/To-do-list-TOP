@@ -17,13 +17,16 @@ export default function createTaskInput() {
     title.placeholder = "What do you want to call your task?";
     title.required = true;
 
-    const description = document.createElement("input");
-    description.type = "text";
-    description.id = "new-task-description";
-    description.placeholder = "What do you need to do?";
-
+    const descriptionSpan = document.createElement("span");
+    const descriptionP = document.createElement("p");
+    descriptionSpan.className = "textarea";
+    descriptionSpan.role = "textbox";
+    descriptionSpan.id = "new-task-description";
+    // descriptionSpan.innerText= "What do you need to do?";
+    descriptionSpan.contentEditable = true;
+    descriptionP.appendChild(descriptionSpan);
     inputDiv.appendChild(title);
-    inputDiv.appendChild(description);
+    inputDiv.appendChild(descriptionP);
     taskform.appendChild(h1);
     taskform.appendChild(inputDiv);
 
@@ -113,7 +116,7 @@ export default function createTaskInput() {
         e.preventDefault();
         const taskData = {
             title: title.value,
-            description: description.value,
+            description: descriptionSpan.textContent,
             dueDate: date.value,
             priority: prioritySelect.value,
             completed: false,
