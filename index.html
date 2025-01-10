@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasker | TOP</title>
+    <link rel="icon" href="8367dc1ec9f8c5904f16.svg" type=image/svg>
+<script defer src="main.js"></script></head>
+
+<body>
+    <div class="content">
+        <button type = "button" id ="hamburger"></button>
+        <nav id="navbar">
+            <h1 id="logo">Tasker</h1>
+            <hr>
+            <h2 id="home">Home <button type="button" class="navbutton newTask">+ Task</button></h2>
+            <ul id="home-list">
+                <li>
+                    <button type="button" class="task all">
+                        <img src="8367dc1ec9f8c5904f16.svg" alt="All tasks">
+                        All Tasks
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="task complete">
+                        <img src="333bd0bd9375f43ca7a6.svg" alt="Completed tasks">
+                        Completed
+                    </button>
+                </li>
+            </ul>
+            <hr>
+            <h2 id="projects">My Projects <button type="button" class="navbutton newProject">+ Project</button>
+            </h2>
+            <ul id="project-list">
+                <li><button type="button" class="personal project">Personal</button></li>
+            </ul>
+            <hr>
+        </nav>
+        <div class="task-list-container">
+            <h1></h1>
+            <div class="task-list">
+
+            </div>
+            <button type="button" class="listbutton newTask">+ Add a Task</button>
+        </div>
+        <dialog id="task-dialog">
+            <div class="overlay">
+            </div>
+        </dialog>
+    </div>
+    <script>
+
+    </script>
+</body>
+
+</html>
