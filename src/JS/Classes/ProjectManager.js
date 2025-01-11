@@ -81,7 +81,7 @@ export default class ProjectManager {
             delProject.type = "button";
 
             projectButton.type = "button";
-            projectButton.classList.add(project.getProjectName());
+            projectButton.classList.add(project.getProjectName().replace(/\s+/g, '-'));
             projectButton.classList.add("project");
             projectButton.textContent = project.getProjectName();
             projectListItem.appendChild(projectButton);

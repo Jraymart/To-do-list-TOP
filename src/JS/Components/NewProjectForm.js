@@ -51,8 +51,9 @@ export default function createProjectInput() {
             const newListItem = document.createElement("li");
             const newListButton = document.createElement("button");
             newListButton.type = "button";
-            newListButton.className = newProject.getProjectName() + " project";
+            newListButton.className = newProject.getProjectName().replace(/\s+/g, '-') + " project";
             newListButton.textContent = newProject.getProjectName();
+            console.log(newProject.getProjectName());
             newListItem.appendChild(newListButton);
             projectList.appendChild(newListItem);
         }
